@@ -7,6 +7,14 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/my-image:$SHORT_SHA']
 
+  # Step 3: Set up kubectl for Autopilot cluster
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: ['set', 'image', 'deployment/my-deployment', 'my-container=gcr.io/$PROJECT_ID/my-image:$SHORT_SHA']
+    env:
+      - 'CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1'
+      - 'CLOUDSDK_CONTAINER_REGION=us-central1'
+
 # Specify images to be available after the build
 images:
   - 'gcr.io/$PROJECT_ID/my-image:$SHORT_SHA'
+
