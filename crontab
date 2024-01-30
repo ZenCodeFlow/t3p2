@@ -1,0 +1,2 @@
+0 0 * * * python /app/data_ingestion.py >> /var/log/cron.log 2>&1
+
